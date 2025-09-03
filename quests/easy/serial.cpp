@@ -2,32 +2,21 @@
 
 void setup() {
     Serial.begin(9600);
-    Serial.println("Arduino Serial Monitor Started!");
-    Serial.println("==============================");
+    Serial.println("Hello Arduino!");
+    Serial.println("Starting setup...");
 }
 
 void loop() {
-    static unsigned long counter = 0;
-    static unsigned long lastTime = 0;
+    Serial.println("Arduino is running...");
+    Serial.print("Uptime: ");
+    Serial.print(millis() / 1000);
+    Serial.println(" seconds");
     
-    unsigned long currentTime = millis();
-    
-    if (currentTime - lastTime >= 1000) {
-        counter++;
-        
-        Serial.print("Count: ");
-        Serial.print(counter);
-        Serial.print(" | Uptime: ");
-        Serial.print(currentTime / 1000);
-        Serial.print("s | Free RAM: ");
-        Serial.print(freeMemory());
-        Serial.println(" bytes");
-        
-        lastTime = currentTime;
+    if (Serial.available()) {
+        char input = Serial.read();
+        Serial.print("You sent: ");
+        Serial.println(input);
     }
-}
-
-int freeMemory() {
-    char top;
-    return &top - reinterpret_cast<char*>(sbrk(0));
+    
+    delay(1000);
 }
